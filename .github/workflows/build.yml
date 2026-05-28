@@ -10,16 +10,17 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - name: Install Gradle
+      - name: Install Gradle 7.6
         run: |
-          sudo apt-get update
-          sudo apt-get install gradle -y
+          wget https://services.gradle.org/distributions/gradle-7.6-bin.zip
+          unzip gradle-7.6-bin.zip
+          export PATH=$PATH:`pwd`/gradle-7.6/bin
       - name: Build APK
         run: |
-          cd GreedyStarAssistant/app   # <--- المسار الصحيح
+          cd GreedyStarAssistant
           gradle assembleDebug --no-daemon
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: GreedyStarAssistant/app/build/outputs/apk/debug/*.apk   # <--- عدل المسار هنا أيضاً
+          path: GreedyStarAssistant/app/build/outputs/apk/debug/*.apk
